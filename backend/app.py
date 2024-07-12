@@ -6,6 +6,7 @@ import os
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 CORS(app)
 
+
 upload_folder = 'excelData'
 if not os.path.exists(upload_folder):
     os.makedirs(upload_folder)
