@@ -6,7 +6,6 @@ import os
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 CORS(app)
 
-
 upload_folder = 'excelData'
 if not os.path.exists(upload_folder):
     os.makedirs(upload_folder)
@@ -61,15 +60,18 @@ def analyze_file():
     df = pd.read_excel(file_path)
 
     description = df.describe().to_dict()
-    shape = df.shape
+    shape = "{} rows * {} columns".format(df.shape[0], df.shape[1])
     null_info = df.isnull().sum().to_dict()
     distinct_values = {col: df[col].nunique() for col in df.columns}
 
+    # analysis = {
+    #     "description": description,
+    #     "shape": shape,
+    #     "null_info": null_info,
+    #     "distinct_values": distinct_values
+    # }
     analysis = {
-        "description": description,
-        "shape": shape,
-        "null_info": null_info,
-        "distinct_values": distinct_values
+        'shape': shape,
     }
 
     return jsonify(analysis)
